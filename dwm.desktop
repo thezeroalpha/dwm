@@ -1,0 +1,7 @@
+# /usr/share/xsessions/ entry for dwm
+[Desktop Entry]
+Name=dwm
+Comment=DWM session
+Exec=env _JAVA_AWT_WM_NONREPARENTING=1 /usr/local/bin/dwm
+Type=Application
+DesktopNames=dwm
