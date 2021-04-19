@@ -10,17 +10,19 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
-        /*               fg         bg         border   */
-        [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-        [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+static char font[]            = "monospace:size=10";
+static char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { font };
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -81,14 +83,39 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+		{ "color0",		STRING,	&normbordercolor },
+		{ "color8",		STRING,	&selbordercolor },
+		{ "color0",		STRING,	&normbgcolor },
+		{ "color4",		STRING,	&normfgcolor },
+		{ "color0",		STRING,	&selfgcolor },
+		{ "color4",		STRING,	&selbgcolor },
+		{ "borderpx",		INTEGER, &borderpx },
+		{ "snap",		INTEGER, &snap },
+		{ "showbar",		INTEGER, &showbar },
+		{ "topbar",		INTEGER, &topbar },
+		{ "nmaster",		INTEGER, &nmaster },
+		{ "resizehints",	INTEGER, &resizehints },
+		{ "mfact",		FLOAT,	&mfact },
+		{ "gappih",		INTEGER, &gappih },
+		{ "gappiv",		INTEGER, &gappiv },
+		{ "gappoh",		INTEGER, &gappoh },
+		{ "gappov",		INTEGER, &gappov },
+		{ "smartgaps",		INTEGER, &smartgaps }
+};
 
 static Key keys[] = {
         /* modifier                     key        function        argument */
         STACKKEYS(MODKEY,                          focus),
         STACKKEYS(MODKEY|ShiftMask,                push),
         { MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,		XK_r,	   livereload_xresources,	   {.v = NULL } },
         { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
         { MODKEY,                       XK_b,      togglebar,      {0} },
         { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
