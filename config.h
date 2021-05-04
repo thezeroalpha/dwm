@@ -29,6 +29,8 @@ static char *colors[][3] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+#define TERM "st"
+#define TERMCLASS "St"
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -36,7 +38,7 @@ static const Rule rules[] = {
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ "St",       NULL,       NULL,       	    0,            0,           1,         0,        -1 },
+	{ TERMCLASS,       NULL,       NULL,       	    0,            0,           1,         0,        -1 },
         { "Desktop-session-exit.py", NULL, NULL,    0,            1,           0,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 };
@@ -84,10 +86,12 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+#define STATUSBAR "dwmblocks"
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { TERM, NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -177,7 +181,13 @@ static Button buttons[] = {
         { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
         { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
         { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-        { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+        { ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1 } },
+        { ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2 } },
+        { ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3 } },
+        { ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4 } },
+        { ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5 } },
+        { ClkStatusText,        ShiftMask,      Button1,        sigstatusbar,   {.i = 6} },
+        { ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERM " -e vim ~/repos/dwmblocks/blocks.h") },
         { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
         { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
         { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
