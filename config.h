@@ -11,8 +11,8 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static char font[]            = "monospace:size=10";
-static char dmenufont[]       = "monospace:size=10";
+static char font[]            = "MesloLGS NF:size=10";
+static char dmenufont[]       = "MesloLGS NF:size=10";
 static const char *fonts[]          = { font };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -36,12 +36,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class,                    instance,        title,          tags,   isfloating, isterminal, noswallow, monitor */
-	{ "Gimp",                    NULL,            NULL,           1 << 8, 0,          0,          0,         -1 },
-	{ TERMCLASS,                 NULL,            NULL,           0,      0,          1,          0,         -1 },
-        { "Desktop-session-exit.py", NULL,            NULL,           0,      1,          0,          0,         -1 },
-	{ NULL,                      NULL,            "Event Tester", 0,      0,          0,          1,         -1 },
-        { "Brave-browser",           "brave-browser", NULL,           9 << 8, 0,          0,          0,         -1 },
+	/* class,                    instance,               title,          tags,   isfloating, isterminal, noswallow, monitor */
+	{ "Gimp",                    NULL,                   NULL,           1 << 8, 0,          0,          0,         -1 },
+	{ TERMCLASS,                 NULL,                   NULL,           0,      0,          1,          0,         -1 },
+        { "Desktop-session-exit.py", NULL,                   NULL,           0,      1,          0,          0,         -1 },
+	{ NULL,                      NULL,                   "Event Tester", 0,      0,          0,          1,         -1 },
+        { "Brave-browser",           "brave-browser",        NULL,           9 << 8, 0,          0,          0,         -1 },
 };
 
 /* layout(s) */
@@ -193,7 +193,7 @@ static Button buttons[] = {
         { ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4 } },
         { ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5 } },
         { ClkStatusText,        ShiftMask,      Button1,        sigstatusbar,   {.i = 6} },
-        { ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERM " -e vim ~/repos/dwmblocks/blocks.h") },
+        { ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERM " -e vim ~/Repos/dwmblocks/blocks.h") },
         { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
         { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
         { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
