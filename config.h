@@ -13,7 +13,9 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static char font[]            = "MesloLGS NF:size=10";
 static char dmenufont[]       = "MesloLGS NF:size=10";
-static const char *fonts[]          = { font };
+static const char *fonts[]          = { font,
+                                        "Noto Color Emoji:pixelsize=14:antialias=true:autohint=true",
+                                        "Unifont:pixelsize=14:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
