@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static unsigned int borderpx  = 1;        /* border pixel of windows */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static unsigned int gappih    = 20;       /* horiz inner gap between windows */
 static unsigned int gappiv    = 10;       /* vert inner gap between windows */
@@ -39,6 +39,8 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
+	 *
+	 * tags: tag 1 is 000000001, tag 9 is 100000000, etc. https://dwm.suckless.org/customisation/tagmask/
 	 */
 	/* class,                    instance,               title,          tags,   isfloating, isterminal, noswallow, monitor */
 	{ "Gimp",                    NULL,                   NULL,           0,      0,          0,          0,         -1 },
@@ -48,6 +50,10 @@ static const Rule rules[] = {
         { "Brave-browser",           "brave-browser",        NULL,           1 << 8, 0,          0,          0,         -1 },
         { "Dragon-drag-and-drop",    NULL,                   NULL,           0,      1,          0,          1,         -1 },
         { "Signal",                  "signal",               "Signal",       1 << 7, 0,          0,          0,         -1 },
+        { "thunderbird",                  NULL,               NULL,       1 << 4, 0,          0,          0,         -1 },
+        { "Mattermost",                  NULL,               NULL,       1 << 5, 0,          0,          0,         -1 },
+        { "KeePassXC",                  NULL,               NULL,       1 << 6, 0,          0,          0,         -1 },
+        { "Spotify",                NULL,                   NULL,           1 << 3, 0, 0, 1, -1 },
 };
 
 /* layout(s) */
@@ -106,8 +112,8 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "color0",		STRING,	&normbordercolor },
-		{ "color8",		STRING,	&selbordercolor },
+		{ "color8",		STRING,	&normbordercolor },
+		{ "color4",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
 		{ "color4",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
