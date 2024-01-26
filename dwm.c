@@ -907,6 +907,19 @@ drawbar(Monitor *m)
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+			if (selmon->pertag->curtag == 0) {
+				char windowlabel[20] = {0};
+				windowlabel[0] = '{';
+				char *cursor = windowlabel+1;
+				for (int i = 0; i < LENGTH(tags); i++) {
+					if (selmon->sel->tags & 1 << i) {
+						int written = sprintf(cursor, "%d,", i+1);
+						cursor += written;
+					}
+				}
+				*(--cursor) = '}';
+				x = drw_text(drw, x, 0, TEXTW(&windowlabel[0]), bh, lrpad / 2, &windowlabel[0], 0);
+			}
 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
