@@ -281,6 +281,7 @@ static void zoom(const Arg *arg);
 static void load_xresources(void);
 static void livereload_xresources(const Arg *arg);
 static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
+static void jumptotag(const Arg *arg);
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -2749,6 +2750,20 @@ livereload_xresources(const Arg *arg)
                 scheme[i] = drw_scm_create(drw, colors[i], 3);
   focus(NULL);
   arrange(NULL);
+}
+
+void
+jumptotag(const Arg *arg) {
+	if (selmon->pertag->curtag != 0)
+		return;
+
+	for (int i = 0; i < LENGTH(tags); i++) {
+		if (selmon->sel->tags & 1 << i) {
+			Arg a = {.ui = 1 << i};
+			view(&a);
+			return;
+		}
+	}
 }
 
 
