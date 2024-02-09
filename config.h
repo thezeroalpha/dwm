@@ -49,6 +49,7 @@ static const Rule rules[] = {
 	{ NULL,                      NULL,                   "Event Tester", 0,      0,          0,          1,         -1 },
         { "Brave-browser",           "brave-browser",        NULL,           1 << 8, 0,          0,          0,         -1 },
         { "Dragon-drag-and-drop",    NULL,                   NULL,           0,      1,          0,          1,         -1 },
+        { "ripdrag",    NULL,                   NULL,           0,      1,          0,          1,         -1 },
         { "Signal",                  "signal",               "Signal",       1 << 7, 0,          0,          0,         -1 },
         { "thunderbird",                  NULL,               NULL,       1 << 4, 0,          0,          0,         -1 },
         { "Mattermost",                  NULL,               NULL,       1 << 5, 0,          0,          0,         -1 },
@@ -199,6 +200,8 @@ static Button buttons[] = {
         /* click                event mask      button          function        argument */
         { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
         { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+        { ClkLtSymbol,          0,              Button4,        focusstack,     {.i = INC(-1) } },
+        { ClkLtSymbol,          0,              Button5,        focusstack,     {.i = INC(+1) } },
         { ClkWinTitle,          0,              Button2,        zoom,           {0} },
         { ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1 } },
         { ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2 } },
