@@ -362,16 +362,25 @@ applyrules(Client *c)
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
 
+	int longest_rule_match = 0;
+
 	for (i = 0; i < LENGTH(rules); i++) {
 		r = &rules[i];
-		if ((!r->title || strstr(c->name, r->title))
+
+		int rule_title_len = 0;
+		if (r->title)
+			rule_title_len = strlen(r->title);
+
+		if ((!r->title || (strstr(c->name, r->title) && (rule_title_len > longest_rule_match)))
 		&& (!r->class || strstr(class, r->class))
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
+			if (r->title)
+				longest_rule_match = rule_title_len;
 			c->isterminal = r->isterminal;
 			c->noswallow  = r->noswallow;
 			c->isfloating = r->isfloating;
-			c->tags |= r->tags;
+			c->tags = r->tags; // I don't want the rules to be additive
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
 				c->mon = m;
