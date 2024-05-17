@@ -54,6 +54,7 @@ static const Rule rules[] = {
         { "ripdrag",                  NULL,             NULL,                     0,       1,           0,           1,          -1 },
         { "Signal",                   "signal",         "Signal",                 1 << 7,  0,           0,           0,          -1 },
         { "thunderbird",              NULL,             NULL,                     1 << 4,  0,           0,           0,          -1 },
+        { "thunderbird",              "Calendar",       "Reminder",               0,       1,           0,           0,          -1 },
         { "Mattermost",               NULL,             NULL,                     1 << 5,  0,           0,           0,          -1 },
         { "KeePassXC",                "keepassxc",      "Passwords",              1 << 6,  0,           0,           0,          -1 },
         { "KeePassXC",                "keepassxc",      "KeePassXC",              1 << 6,  0,           0,           0,          -1 },
