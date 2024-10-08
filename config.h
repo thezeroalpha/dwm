@@ -44,22 +44,24 @@ static const Rule rules[] = {
 	 * tags: tag 1 is 000000001 (1st from the right), tag 9 is 100000000, etc. https://dwm.suckless.org/customisation/tagmask/
 	 *       tag 0 is the currently selected tag.
 	 */
-	/* class,                     instance,         title,                    tags,    isfloating,  isterminal,  noswallow,  monitor */
-	{ "Gimp",                     NULL,             NULL,                     0,       0,           0,           0,          -1 },
-	{ TERMCLASS,                  NULL,             NULL,                     0,       0,           1,           0,          -1 },
-        { "Desktop-session-exit.py",  NULL,             NULL,                     0,       1,           0,           0,          -1 },
-	{ NULL,                       NULL,             "Event Tester",           0,       0,           0,           1,          -1 },
-        { "Brave-browser",            "brave-browser",  NULL,                     1 << 8,  0,           0,           0,          -1 },
-        { "Dragon-drag-and-drop",     NULL,             NULL,                     0,       1,           0,           1,          -1 },
-        { "ripdrag",                  NULL,             NULL,                     0,       1,           0,           1,          -1 },
-        { "Signal",                   "signal",         "Signal",                 1 << 7,  0,           0,           0,          -1 },
-        { "thunderbird",              NULL,             NULL,                     1 << 4,  0,           0,           0,          -1 },
-        { "thunderbird",              "Calendar",       "Reminder",               0,       1,           0,           0,          -1 },
-        { "Mattermost",               NULL,             NULL,                     1 << 5,  0,           0,           0,          -1 },
-        { "KeePassXC",                "keepassxc",      "Passwords",              1 << 6,  0,           0,           0,          -1 },
-        { "KeePassXC",                "keepassxc",      "KeePassXC",              1 << 6,  0,           0,           0,          -1 },
-        { "KeePassXC",                "keepassxc",      "Auto-Type - KeePassXC",  0,       1,           0,           0,          -1 },
-        { "Spotify",                  NULL,             NULL,                     1 << 3,  0,           0,           1,          -1 },
+	/* class,                    instance,        title,                   tags,   isfloating, isterminal, noswallow, monitor */
+	{ "Gimp",                    NULL,            NULL,                    0,      0,          0,          0,         -1 },
+	{ TERMCLASS,                 NULL,            NULL,                    0,      0,          1,          0,         -1 },
+        { "Desktop-session-exit.py", NULL,            NULL,                    0,      1,          0,          0,         -1 },
+	{ NULL,                      NULL,            "Event Tester",          0,      0,          0,          1,         -1 },
+        { "Brave-browser",           "brave-browser", NULL,                    1 << 8, 0,          0,          0,         -1 },
+        { "Dragon-drag-and-drop",    NULL,            NULL,                    0,      1,          0,          1,         -1 },
+        { "ripdrag",                 NULL,            NULL,                    0,      1,          0,          1,         -1 },
+        { "Signal",                  "signal",        "Signal",                1 << 7, 0,          0,          0,         -1 },
+        { "thunderbird",             NULL,            NULL,                    1 << 4, 0,          0,          0,         -1 },
+        { "thunderbird",             "Calendar",      "Reminder",              0,      1,          0,          0,         -1 },
+        { "thunderbird",             "Thunderbird",   "Edit Repeating Event",  0,      1,          0,          0,         -1 },
+        { "Mattermost",              NULL,            NULL,                    1 << 5, 0,          0,          0,         -1 },
+        { "KeePassXC",               "keepassxc",     "Passwords",             1 << 6, 0,          0,          0,         -1 },
+        { "KeePassXC",               "keepassxc",     "KeePassXC",             1 << 6, 0,          0,          0,         -1 },
+        { "KeePassXC",               "keepassxc",     "Auto-Type - KeePassXC", 0,      1,          0,          0,         -1 },
+        { "KeePassXC",               "keepassxc",     "Unlock Database - KeePassXC",       0,      1,          0,          0,         -1 },
+        { "Spotify",                 NULL,            NULL,                    1 << 3, 0,          0,          1,         -1 },
 };
 
 /* layout(s) */
@@ -147,6 +149,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_r,	   livereload_xresources,	   {.v = NULL } },
         { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
         { MODKEY|ShiftMask,             XK_minus,  togglescratch,  {.v = scratchpadcmd } },
+        { MODKEY|ShiftMask|ControlMask,    XK_minus, toggletagscratch, {0} },
         { MODKEY,                       XK_b,      togglebar,      {0} },
         { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
         { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
