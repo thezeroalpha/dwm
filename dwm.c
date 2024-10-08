@@ -257,6 +257,7 @@ static void togglesticky(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
+static void toggletagscratch(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
@@ -988,13 +989,21 @@ expose(XEvent *e)
 		drawbar(m);
 }
 
+// Gives input focus to a visible client.
+// If the client is NULL, focus will be given to next visible client in
+// stacking order. So the window that last had focus will receive input focus.
 void
 focus(Client *c)
 {
+	// If client is NULL or not visible, search first non-sticky visible client.
 	if (!c || !ISVISIBLE(c))
-		for (c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
+		for (c = selmon->stack; c && (!ISVISIBLE(c) || c->issticky); c = c->snext);
+
+	// If there's a selected client on the current monitor, and is different
+	// from client receiving focus, call unfocus on that client.
 	if (selmon->sel && selmon->sel != c)
 		unfocus(selmon->sel, 0);
+
 	if (c) {
 		if (c->mon != selmon)
 			selmon = c->mon;
@@ -2098,6 +2107,20 @@ toggletag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+}
+
+void
+toggletagscratch(const Arg *arg)
+{
+	if (!selmon->sel)
+		return;
+	if (selmon->sel->tags == scratchtag)
+		selmon->sel->tags = selmon->pertag->curtag;
+	else
+		selmon->sel->tags = scratchtag;
+
+	focus(NULL);
+	arrange(selmon);
 }
 
 void
