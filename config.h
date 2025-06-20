@@ -50,6 +50,8 @@ static const Rule rules[] = {
         { "Desktop-session-exit.py", NULL,            NULL,                    0,      1,          0,          0,         -1 },
 	{ NULL,                      NULL,            "Event Tester",          0,      0,          0,          1,         -1 },
         { "Brave-browser",           "brave-browser", NULL,                    1 << 8, 0,          0,          0,         -1 },
+        { "Brave-browser",           NULL,            "Outlook (PWA)",         1 << 4, 0,          0,          0,         -1 },
+        { "Brave-browser",           NULL,            "Microsoft Teams",       1 << 5, 0,          0,          0,         -1 },
         { "Dragon-drag-and-drop",    NULL,            NULL,                    0,      1,          0,          1,         -1 },
         { "ripdrag",                 NULL,            NULL,                    0,      1,          0,          1,         -1 },
         { "Signal",                  "signal",        "Signal",                1 << 7, 0,          0,          0,         -1 },
