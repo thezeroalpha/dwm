@@ -2810,6 +2810,11 @@ jumptotag(const Arg *arg) {
 int
 main(int argc, char *argv[])
 {
+	pid_t pid = getpid();
+	char pid_s[sizeof(int)] = {0};
+	snprintf(pid_s, sizeof(int), "%d", pid);
+	setenv("DWM_PID", pid_s, 1);
+
 	if (argc == 2 && !strcmp("-v", argv[1]))
 		die("dwm-"VERSION);
 	else if (argc != 1)
