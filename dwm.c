@@ -346,6 +346,8 @@ static unsigned int scratchtag = 1 << LENGTH(tags);
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 
+static unsigned int swallow_next = 1;
+
 /* function implementations */
 void
 applyrules(Client *c)
@@ -499,6 +501,10 @@ attachstack(Client *c)
 void
 swallow(Client *p, Client *c)
 {
+	if (!swallow_next) {
+		swallow_next = 1;
+		return;
+	}
 
 	if (c->noswallow || c->isterminal)
 		return;
@@ -1808,6 +1814,11 @@ setmfact(const Arg *arg)
 	arrange(selmon);
 }
 
+void no_swallow_next(int signum, siginfo_t *si, void *ucontext)
+{
+	swallow_next = 0;
+}
+
 void
 setup(void)
 {
@@ -1876,6 +1887,12 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+
+	struct sigaction sa = {
+		.sa_sigaction = no_swallow_next,
+		.sa_flags = SA_SIGINFO,
+	};
+	sigaction(SIGRTMIN+69, &sa, NULL);
 }
 
 
